@@ -93,7 +93,6 @@ class P9RLEnv(gym.Env):
 
     def reset(self):
  
-        if not self.logDir: self._getLogDirectory()
         self._startEpisode() # Reset evetything needs resetting
         if not self.seeded:
             random.seed(self.currentEpisode)
@@ -267,14 +266,6 @@ class P9RLEnv(gym.Env):
 
     def _startEpisode(self):
 
-        if self.start != 0: self._logEpisode()
-        # Read episode number
-        if self.currentEpisode == 0 and os.path.exists(self.path + 'eps.txt'):
-            self.currentEpisode = self._read_file('eps.txt')
-        else:
-            self.currentEpisode += 1
-        print('\n\t\t\t\t EPISODE No. {} \n'.format(self.currentEpisode))
-        self.start = time.time()
         if self.needReset: # Reset object(s) / counters / rewards
             print('Resetting Robot...')
             self._resetObject(self.robot, self.robotResetLocation) 

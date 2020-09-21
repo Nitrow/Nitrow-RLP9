@@ -180,16 +180,13 @@ class P9RLEnv(gym.Env):
 
         if self.counter >= self.maxTimestep: # Check maximum timestep
             self.needReset = True
-            self._endEpisode('timeout')
             return True, self.EOEPunish
         minScan = min(list(filter(lambda a: a != 0, self.lidarRanges[:]))) # Check LiDar
         if minScan < 0.2:
             self.needReset = True
-            self._endEpisode('collision')
             return True, self.EOEPunish
         elif self.dist < 0.35: # Check Goal
             self.needReset = True if self.boxEnv else False
-            self._endEpisode('success')
             return True, self.EOEReward
         else:
             return False, 0

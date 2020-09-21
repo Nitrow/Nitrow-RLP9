@@ -1,0 +1,15 @@
+#VRML_OBJ R2019b utf8
+DEF GOAL Solid {
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.937255 0.160784 0.160784
+        metalness 0
+      }
+      geometry Cone {
+        bottomRadius 0.2
+        height 0.2
+      }
+    }
+  ]
+}

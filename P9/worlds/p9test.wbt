@@ -1,0 +1,210 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  coordinateSystem "NUE"
+  contactProperties [
+    ContactProperties {
+      material2 "sliding_ball"
+      coulombFriction [
+        0
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.5741426624568251 -0.5825051513758727 -0.5753676665989842 2.0840817382087975
+  position -0.29548590583887613 22.778693148985504 -0.00765107860897026
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  appearance MarbleTiles {
+  }
+}
+DEF TB TurtleBot3Burger {
+  hidden position_0_0 10122.223992509491
+  hidden position_0_1 7745.402337622355
+  hidden position_0_2 -11.902373819426709
+  hidden linearVelocity_0 -0.0924071979064486 5.4948137262980235e-05 0.04472950501133692
+  hidden angularVelocity_0 0.0008792980940053969 0.5996401670485217 0.0016567740525191316
+  hidden rotation_8 0.006231137401584445 -0.0062311602898724875 -0.9999611720302567 4.712346478456032
+  hidden linearVelocity_8 -0.11837664437019997 -2.8643755170545207e-05 0.08989500639059943
+  hidden angularVelocity_8 2.789140939583108 0.6230574252252797 3.702018653596994
+  hidden rotation_9 0.5361537924406363 0.5361564210306892 0.6519780694464234 4.297126901294174
+  hidden linearVelocity_9 -0.042207249237356796 1.4634695055043383e-05 0.03128897175676464
+  hidden angularVelocity_9 0.8511537178936706 0.5989586631811957 1.1482464799053176
+  hidden translation_10 -1.933790506974953e-06 0.004009531305578158 0.08106570541148127
+  hidden rotation_10 0.20871831401842572 0.664764684813471 -0.7173036868845389 2.441355649072405
+  hidden linearVelocity_10 -0.10999349791030506 2.2661618004933732e-05 0.022099017845634998
+  hidden angularVelocity_10 5.524757286427108 -0.01002226269063725 27.4983647049144
+  translation -0.14011163324559772 -0.00024698794469411173 0.052452395661632525
+  rotation 0.0011434211741355375 0.9999965699773685 -0.0023564001180286327 2.2288661343980714
+  controller "master"
+  supervisor TRUE
+  extensionSlot [
+    DEF TurtleBotLidar RobotisLds01 {
+      noise 0
+    }
+  ]
+}
+DEF OBJ_WALL_1 Solid {
+  translation 5 0.05 0
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.729412 0.741176 0.713725
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.02 0.35 9.98
+      }
+    }
+  ]
+  name "solid(4)"
+  boundingObject USE WALL_SHAPE
+}
+DEF OBJ_WALL_2 Solid {
+  translation -5 0.05 0
+  children [
+    USE WALL_SHAPE
+  ]
+  name "solid(1)"
+  boundingObject USE WALL_SHAPE
+}
+DEF OBJ_WALL_3 Solid {
+  translation 0 0.05 -5
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  name "solid(2)"
+  boundingObject USE WALL_SHAPE
+}
+DEF OBJ_WALL_4 Solid {
+  translation 0 0.05 5
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  name "solid(3)"
+  boundingObject USE WALL_SHAPE
+}
+DEF GOAL Solid {
+  translation 3 0.01 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.8 0 0
+        metalness 0
+      }
+      geometry Cone {
+        bottomRadius 0.4
+        height 0.05
+      }
+    }
+  ]
+}
+DEF OBJ_PILLAR_17 Solid {
+  translation -2.25 0.05 0.75
+  rotation 0 1 0 1
+  children [
+    DEF OBJ_PILLAR Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.4
+        radius 0.25
+      }
+    }
+  ]
+  name "solid(23)"
+  boundingObject USE OBJ_PILLAR
+}
+DEF OBJ_PILLAR_20 Solid {
+  translation -2.25 0.05 -2.25
+  rotation 0 1 0 1
+  children [
+    DEF OBJ_PILLAR Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.4
+        radius 0.25
+      }
+    }
+  ]
+  name "solid(15)"
+  boundingObject USE OBJ_PILLAR
+}
+DEF OBJ_PILLAR_21 Solid {
+  translation 0.75 0.05 -2.25
+  rotation 0 1 0 1
+  children [
+    DEF OBJ_PILLAR Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.4
+        radius 0.25
+      }
+    }
+  ]
+  name "solid(25)"
+  boundingObject USE OBJ_PILLAR
+}
+DEF OBJ_PILLAR_31 Solid {
+  translation 2.08971 0.05 -0.555843
+  rotation 0 1 0 1
+  children [
+    DEF OBJ_PILLAR Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.4
+        radius 0.25
+      }
+    }
+  ]
+  name "solid(35)"
+  boundingObject USE OBJ_PILLAR
+}
+DEF OBJ_PILLAR_32 Solid {
+  translation 1.97235 0.05 2.07169
+  rotation 0 1 0 1
+  children [
+    DEF OBJ_PILLAR Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.4
+        radius 0.25
+      }
+    }
+  ]
+  name "solid(36)"
+  boundingObject USE OBJ_PILLAR
+}
+DEF OBJ_PILLAR_34 Solid {
+  translation -0.505975 0.05 2.40671
+  rotation 0 1 0 1
+  children [
+    DEF OBJ_PILLAR Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.4
+        radius 0.25
+      }
+    }
+  ]
+  name "solid(38)"
+  boundingObject USE OBJ_PILLAR
+}

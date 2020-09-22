@@ -12,7 +12,7 @@ class P9RLEnv(gym.Env):
 
     metadata = {'render.modes': ['human']}
     motors = []
-    timeStep = 32
+    timeStep = 1
     restrictedGoals = True
     boxEnv = False
     isFixedGoal = False
@@ -33,6 +33,8 @@ class P9RLEnv(gym.Env):
         self.obsProximityParam = 1
         self.EOEPunish = -300
         self.EOEReward = 600
+        self.EOERewardCounter = 0
+        self.EpisodeCounter = 0
         # Total reward counter for each component
         self.moveTowardGoalTotalReward = 0
         self.obsProximityTotalPunish = 0
@@ -94,6 +96,8 @@ class P9RLEnv(gym.Env):
     def reset(self):
  
         self._startEpisode() # Reset evetything needs resetting
+        self.EpisodeCounter = self.EpisodeCounter + 1
+        print(self.EpisodeCounter)
         if not self.seeded:
             random.seed(self.currentEpisode)
             self.seeded = True
@@ -112,17 +116,18 @@ class P9RLEnv(gym.Env):
 
         self.action = action # Take action
         self._take_action(action)
- 
+        self.counter += 1
         #sself.supervisor.simulationSetMode(3)
         self._getState() # Observe new state
         self.state = np.asarray([self.dist, self.direction] + self.lidarRanges)
         self.prevAction = self.action[:] # Set previous action     
         #   Get State(dist from obstacle + lidar) and convert to numpyarray
+        #print(self.lidarRanges[0])
+        self.supervisor.step(32)
         self.reward = self._calculateReward() #   get Reward
         self.done, extraReward = self._isDone() #   determine if state is Done, extra reward/punishment
         self.reward += extraReward
         self.totalreward += self.reward
-        self.supervisor.step(1)
         return [self.state, self.reward, self.done, {}]
 
     def _trimLidarReadings(self, lidar):
@@ -189,6 +194,8 @@ class P9RLEnv(gym.Env):
             return True, self.EOEPunish
         elif self.dist < 0.35: # Check Goal
             self.needReset = True if self.boxEnv else False
+            self.EOERewardCounter = self.EOERewardCounter + 1
+            print("SUCCESS COUNTER:", self.EOERewardCounter)
             return True, self.EOEReward
         else:
             return False, 0
@@ -237,7 +244,7 @@ class P9RLEnv(gym.Env):
         obsProximityPunish =  self._rewardObstacleProximity()
         self.obsProximityTotalPunish += obsProximityPunish
         
-        reward = moveTowardsGoalReward + obsProximityPunish*20
+        reward = moveTowardsGoalReward + obsProximityPunish*3
 
         totalRewardDic = {"faceObstacleTotalPunish":self.faceObstacleTotalPunish, "obsProximityTotalPunish":self.obsProximityTotalPunish, "moveTowardGoalTotalReward":self.moveTowardGoalTotalReward}
 

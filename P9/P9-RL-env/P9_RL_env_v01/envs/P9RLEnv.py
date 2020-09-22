@@ -90,7 +90,7 @@ class P9RLEnv(gym.Env):
         #TODO: MAKE POSTIVE LINEAR SPEED A FORWARD MOTION
         self.observation_space = spaces.Box(low=-10, high=10, shape=(14,), dtype=np.float16)
 
-
+        self.counter = 0
     def reset(self):
  
         self._startEpisode() # Reset evetything needs resetting
@@ -108,19 +108,21 @@ class P9RLEnv(gym.Env):
         return np.asarray(self.state)
 
     def step(self, action):
+        
 
         self.action = action # Take action
         self._take_action(action)
-        self.supervisor.step(self.timeStep)
+ 
+        #sself.supervisor.simulationSetMode(3)
         self._getState() # Observe new state
         self.state = np.asarray([self.dist, self.direction] + self.lidarRanges)
         self.prevAction = self.action[:] # Set previous action     
-        self.counter += 1
         #   Get State(dist from obstacle + lidar) and convert to numpyarray
         self.reward = self._calculateReward() #   get Reward
         self.done, extraReward = self._isDone() #   determine if state is Done, extra reward/punishment
         self.reward += extraReward
         self.totalreward += self.reward
+        self.supervisor.step(1)
         return [self.state, self.reward, self.done, {}]
 
     def _trimLidarReadings(self, lidar):
@@ -235,7 +237,7 @@ class P9RLEnv(gym.Env):
         obsProximityPunish =  self._rewardObstacleProximity()
         self.obsProximityTotalPunish += obsProximityPunish
         
-        reward = moveTowardsGoalReward + obsProximityPunish*3
+        reward = moveTowardsGoalReward + obsProximityPunish*20
 
         totalRewardDic = {"faceObstacleTotalPunish":self.faceObstacleTotalPunish, "obsProximityTotalPunish":self.obsProximityTotalPunish, "moveTowardGoalTotalReward":self.moveTowardGoalTotalReward}
 
